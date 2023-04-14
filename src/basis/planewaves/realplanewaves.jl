@@ -57,8 +57,14 @@ function RealPlaneWaves(dim; angle_arc = pi, angle_shift=0.0, sampler=LinearNode
 end
 
 function resize_basis(basis::Ba, billiard::Bi, dim::Int, k) where {Ba<:RealPlaneWaves,Bi<:AbsBilliard}
+    if isnothing(basis.symmetries)
+        return RealPlaneWaves(dim; angle_arc = basis.angle_arc, angle_shift=basis.angle_shift, sampler=basis.sampler)
+    end
     return RealPlaneWaves(dim, basis.symmetries; angle_arc = basis.angle_arc, angle_shift=basis.angle_shift, sampler=basis.sampler)
 end
+
+
+
 
 @inline function rpw(arg, parity::Int64)
     if parity == 1

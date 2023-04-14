@@ -45,12 +45,12 @@ acc_solver = acc_solverA
 
 k0 = 500.00
 dk = 0.1
+
 acc_infoA = benchmark_solver(acc_solverA, basis, billiard, k0, dk; plot_matrix=true);
 acc_infoB = benchmark_solver(acc_solverB, basis, billiard, k0, dk; plot_matrix=true);
 
 sw_info = benchmark_solver(sw_solver, basis, billiard, k0, dk; plot_matrix=true, log=false);
 
-acc_infoA = benchmark_solver(acc_solverA, basis, billiard, k0, dk; plot_matrix=true);
 acc_infoA = benchmark_solver(acc_solverA, fb_basis, billiard, k0, dk; plot_matrix=true);
 
 

@@ -46,13 +46,16 @@ export CircleSegment, VirtualCircleSegment
 export DispersingCircleSegment, VirtualDispersingCircleSegment
 export curve, arc_length, tangent, tangent_vec, normal_vec
 include("billiards/stadium.jl")
+include("billiards/circle.jl")
 include("billiards/lemon.jl")
 include("billiards/sinai.jl")
 include("billiards/triangle.jl")
+include("billiards/rectangle.jl")
+include("billiards/doublebutt.jl")
 export adapt_basis
 #include("limacon.jl")
 #include("rectangle.jl")
-export Stadium, Lemon, Triangle, Sinai
+export Stadium, Lemon, Triangle, Sinai, CircleBilliard, Rectangle, DoubleButt
 export curve, tangent, normal, arc_length
 export tangent_vec, normal_vec
 #convenience functions may be moved somewhere else
@@ -136,7 +139,7 @@ export make_lemon_and_basis
 function make_triangle_and_basis(gamma,chi; edge_i=1)
     cor = Triangle(gamma,chi).corners
     x0,y0 = cor[mod1(edge_i+2,3)]
-    re = [:Virtua, :Virtual, :Virtual]
+    re = [:Virtual, :Virtual, :Virtual]
     re[edge_i] = :Real 
     tr = Triangle(gamma,chi; curve_types = re, x0 = x0, y0 =y0)
     basis = CornerAdaptedFourierBessel(1, adapt_basis(tr,edge_i+2)...) 

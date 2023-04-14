@@ -94,6 +94,7 @@ function compute_psi(state_bundle::S, x_grid, y_grid; inside_only=true, memory_l
     let k = state_bundle.k_basis, basis=state_bundle.basis, billiard=state_bundle.billiard, X=state_bundle.X #basis is correct size
         sz = length(x_grid)*length(y_grid)
         pts = collect(SVector(x,y) for y in y_grid for x in x_grid)
+
         if inside_only
             pts_mask = is_inside(billiard,pts)
             pts = pts[pts_mask]
@@ -109,7 +110,12 @@ function compute_psi(state_bundle::S, x_grid, y_grid; inside_only=true, memory_l
             #Psi = zeros(type,sz)
             B = basis_matrix(basis, k, pts)
             Psi_pts = B*X
-            Psi_bundle[pts_mask,:] .= Psi_pts
+            if inside_only
+                Psi_bundle[pts_mask,:] .= Psi_pts
+            else
+                Psi_bundle .= Psi_pts
+            end
+            
         else
             println("Warning: memory limit of $(Base.format_bytes(memory_limit)) exceded $(Base.format_bytes(memory)).")
             
